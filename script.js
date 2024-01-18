@@ -4,6 +4,9 @@ function adicionarAoCarrinho(nome, preco) {
     const item = document.createElement('li');
     item.className = 'list-group-item';
     item.textContent = `${nome} - R$ ${preco.toFixed(2)}`;
+
+    // Prevenir o comportamento padrão do link
+  event.preventDefault();
   
     // Adicionar item ao carrinho
     document.getElementById('carrinho-lista').appendChild(item);
