@@ -9,17 +9,33 @@ function adicionarAoCarrinho(nome, preco) {
     document.getElementById('carrinho-lista').appendChild(item);
   
     // Atualizar total do carrinho
-    atualizarTotalCarrinho(preco);
+    atualizarTotalCarrinho();
   }
   
-  // Função para atualizar o total do carrinho
-  function atualizarTotalCarrinho(preco) {
-    // Obter o total atual
-    const totalAtual = parseFloat(document.getElementById('total-carrinho').textContent.split(' ')[1]);
+  // Função para calcular e atualizar o total do carrinho
+function atualizarTotalCarrinho() {
+    const itensCarrinho = document.getElementById('carrinho-lista').children;
+    let total = 0;
   
-    // Calcular e atualizar o novo total
-    const novoTotal = totalAtual + preco;
-    document.getElementById('total-carrinho').textContent = `Total: R$ ${novoTotal.toFixed(2)}`;
+    // Calcular o total
+    for (let i = 0; i < itensCarrinho.length; i++) {
+      const precoTexto = itensCarrinho[i].textContent.match(/(\d+\.\d{2})/); // Extrair o preço usando uma expressão regular
+      if (precoTexto) {
+        const preco = parseFloat(precoTexto[0]); // Converter para número
+        total += preco;
+      }
+    }
+  
+    // Atualizar o total na interface do usuário
+    document.getElementById('total-carrinho').textContent = `Total: R$ ${total.toFixed(2)}`;
+  }
+  
+  
+  
+  // Função para limpar o carrinho
+  function limparCarrinho() {
+    document.getElementById('carrinho-lista').innerHTML = ''; // Limpar a lista de itens
+    document.getElementById('total-carrinho').textContent = 'Total: R$ 0,00'; // Resetar o total
   }
   
   // Adicionar produtos dinamicamente
